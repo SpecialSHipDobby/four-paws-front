@@ -16,6 +16,21 @@
             />
           </div>
 
+
+          <!-- 닉네임 필드 -->
+          <div class="mb-3">
+            <label for="nickname" class="form-label">닉네임</label>
+            <input
+                type="text"
+                id="nickname"
+                v-model="form.nickname"
+                class="form-control"
+                placeholder="닉네임을 입력하세요"
+                required
+            />
+          </div>
+
+
           <!-- 이메일 필드 -->
           <div class="mb-3">
             <label for="email" class="form-label">이메일</label>
@@ -65,17 +80,20 @@
 
 <script setup>
 import { ref } from 'vue';
+import axios from "axios";
 
 const form = ref({
   name: '',
   email: '',
   password: '',
   confirmPassword: '',
+  nickname:'',
 });
 
 const handleSubmit = async () => {
   try {
-    const response = await axios.post('http://localhost:8080/users/register', form.value);
+    const response = await axios.post('http://localhost:8080/auth/register', form.value);
+    console.log(response.data)
     alert('회원가입이 완료되었습니다!');
 
     // 폼 초기화
@@ -84,6 +102,7 @@ const handleSubmit = async () => {
       email: '',
       password: '',
       confirmPassword: '',
+      nickname:'',
     };
   } catch (error) {
     console.error('회원가입 실패:', error);
